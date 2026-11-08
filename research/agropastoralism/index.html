@@ -135,6 +135,14 @@ p{font-size:26px;line-height:1.38}
 .s-title .kick{font-family:var(--font-display);font-style:italic;font-size:42px;color:var(--gold)}
 .s-title h1{font-size:82px;line-height:1.04;color:#fff;margin:18px 0 26px}
 .s-title .sub{font-size:30px;color:#DDE4DE}
+.collage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px}
+.collage figure{position:relative;margin:0;border-radius:18px;overflow:hidden;background:var(--ink);min-height:0}
+.collage img{width:100%;height:100%;object-fit:cover;display:block;max-width:none;max-height:none;transition:transform 600ms var(--ease-out)}
+.collage figure:hover img{transform:scale(1.04)}
+.collage figure.light{background:#fff;box-shadow:inset 0 0 0 2px var(--hair)}
+.collage figure.light img{object-fit:contain;padding:8px 8px 44px}
+.collage figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 12px;font-size:18px;color:#fff;background:linear-gradient(0deg,rgba(22,29,24,.85),rgba(22,29,24,0))}
+.collage figure.light figcaption{color:var(--pine);background:none;padding-top:0}
 .s-title .qr{position:absolute;right:96px;bottom:150px;width:300px;background:#fff;border-radius:22px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px;text-decoration:none;color:var(--ink);box-shadow:0 24px 48px -24px rgba(0,0,0,.6)}
 .s-title .qrc svg{display:block;width:256px;height:256px}
 .s-title .qrt{font-size:17px;color:var(--muted);line-height:1.3;text-align:center}
@@ -290,9 +298,9 @@ body.editing [data-edit]{outline:2px dashed rgba(217,154,30,.7);outline-offset:4
 <section class="slide" data-sec="1">
   <h2 class="title r" data-edit>Who are the Gurungs (Tamu)?</h2>
   <div class="body row" style="gap:48px;align-items:stretch">
-    <div class="col" style="width:600px;flex:none">
-      <div class="fill r-img"><img class="ph" src="img/elder.jpg" alt="Portrait of an elderly Gurung man wearing a dhaka topi"></div>
-      <div class="cap">Elder, upper Madi valley</div>
+    <div class="col" style="width:880px;flex:none;justify-content:center">
+      <div class="r-img" style="aspect-ratio:616/414"><img class="ph" src="img/gurung_group.jpg" alt="Six Gurung men and women in traditional dress, with striped wool capes, red blouses and bead necklaces, standing on a ridge with mountains behind"></div>
+      <div class="cap" data-edit>Gurung (Tamu) men and women in traditional dress</div>
     </div>
     <div class="fill" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px">
       <div class="card r" style="--i:1"><div class="row" style="align-items:center;gap:18px;margin-bottom:16px"><span class="ic" style="width:68px;height:68px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"></path></svg></span><span class="k" style="margin:0" data-edit>People and language</span></div><p data-edit>Gurung is the Nepali name; the people call themselves <b>Tamu</b>. Their language, Tamu Kyi, is Tibeto-Burman.</p></div>
@@ -383,7 +391,12 @@ body.editing [data-edit]{outline:2px dashed rgba(217,154,30,.7);outline-offset:4
       <div class="row fill r" style="--i:4;align-items:center"><div class="col" style="width:230px;height:100%;border-radius:18px;background:var(--glacier);color:#fff;align-items:center;justify-content:center;flex:none"><b style="font-size:34px">Winter</b><span style="font-size:20px">Dec–Feb</span></div><p data-edit>Lower forests and fallow terraces; flocks are folded on fields, leaving manure.</p></div>
       <div class="cap" style="margin:0">General pattern only; timing varies by flock, village and year.</div>
     </div>
-    <div class="r-img" style="width:760px;flex:none"><img class="ph" src="img/flock_meadow.jpg" alt="Mixed flock of sheep and goats on an alpine meadow"></div>
+    <div class="collage" style="width:760px;flex:none">
+      <figure class="r-img" style="--i:1"><img src="img/elder.jpg" alt="Portrait of Khamba Gurung wearing a dhaka topi"><figcaption data-edit>Khamba Gurung, herder</figcaption></figure>
+      <figure class="r-img" style="--i:2"><img src="img/flock_meadow.jpg" alt="Mixed flock of sheep and goats on an alpine meadow"><figcaption data-edit>Flock on an alpine meadow</figcaption></figure>
+      <figure class="r-img" style="--i:3"><img src="img/gps_collar.jpg" alt="Handheld GPS receiver with three GPS collar models for tracking flocks"><figcaption data-edit>GPS collars track the flocks</figcaption></figure>
+      <figure class="r-img light" style="--i:4"><img src="img/block_diagram.jpg" alt="3D block diagram of the Madi basin below Mt. Lamjung Kailash showing migration tracks, camp sites, Siklis and Bhujung"><figcaption data-edit>Migration tracks and goths, block diagram</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -711,7 +724,7 @@ body.editing [data-edit]{outline:2px dashed rgba(217,154,30,.7);outline-offset:4
   /* ===========================================
      INLINE EDITING (E key or top-left hotzone); saved in this browser only
      =========================================== */
-  const KEY='lamjung-deck-edits-v3';const editable=[...document.querySelectorAll('[data-edit]')];
+  const KEY='lamjung-deck-edits-v4';const editable=[...document.querySelectorAll('[data-edit]')];
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');editable.forEach((el,i)=>{if(saved[i]!==undefined)el.innerHTML=saved[i];});}catch(e){}
   const toggle=document.getElementById('editToggle'),hot=document.getElementById('hotzone');let editing=false,hideT=null;
   function setEdit(on){editing=on;document.body.classList.toggle('editing',on);toggle.classList.toggle('active',on);toggle.textContent=on?'Done editing':'Edit text';editable.forEach(el=>el.contentEditable=on?'true':'false');if(!on){try{const o={};editable.forEach((el,i)=>o[i]=el.innerHTML);localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}toggle.classList.remove('show');}}
