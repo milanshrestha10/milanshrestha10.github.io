@@ -1,0 +1,22 @@
+# Search engines may fetch the deck page so they see its noindex tag,
+# but should not crawl its downloadable files.
+User-agent: *
+Disallow: /research/agropastoralism/Lamjung_Agropastoralism.pptx
+Disallow: /research/agropastoralism/img/
+Disallow: /research/agropastoralism/fonts/
+
+# AI and dataset crawlers: stay out of the deck entirely.
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: Meta-ExternalAgent
+Disallow: /research/agropastoralism/
+Disallow: /agropastoralism/
