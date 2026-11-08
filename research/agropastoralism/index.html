@@ -360,6 +360,7 @@ body.editing [data-edit]{outline:2px dashed rgba(217,154,30,.7);outline-offset:4
       <div class="row r" style="--i:2;gap:22px"><span class="num" style="background:var(--pine)">2</span><div><span class="k" data-edit>Migration tracks</span><p data-edit>Red dotted lines trace herders' routes between village, forest and alpine camps (<i>goth</i>), up to about 3,900 m.</p></div></div>
       <div class="row r" style="--i:3;gap:22px"><span class="num" style="background:var(--pine)">3</span><div><span class="k" data-edit>Vertical zones</span><p data-edit>Terraced fields, mid-hill forest and alpine meadows are linked by the moving flock.</p></div></div>
       <div class="row r" style="--i:4;gap:22px"><span class="num" style="background:var(--pine)">4</span><div><span class="k" data-edit>Ecosystem services</span><p data-edit>Regulating services, wildlife corridors and biodiversity all depend on how pastures are used.</p></div></div>
+      <div class="row r" style="--i:5;gap:22px"><span class="num" style="background:var(--pine)">5</span><div><span class="k" data-edit>Food security in mountains</span><p data-edit>a) Adaptation to extreme environments<br>b) Diversification of livelihood &amp; risks<br>c) Prioritizing stability in food systems</p></div></div>
     </div>
   </div>
 </section>
@@ -726,7 +727,7 @@ body.editing [data-edit]{outline:2px dashed rgba(217,154,30,.7);outline-offset:4
   /* ===========================================
      INLINE EDITING (E key or top-left hotzone); saved in this browser only
      =========================================== */
-  const KEY='lamjung-deck-edits-v4';const editable=[...document.querySelectorAll('[data-edit]')];
+  const KEY='lamjung-deck-edits-v5';const editable=[...document.querySelectorAll('[data-edit]')];
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');editable.forEach((el,i)=>{if(saved[i]!==undefined)el.innerHTML=saved[i];});}catch(e){}
   const toggle=document.getElementById('editToggle'),hot=document.getElementById('hotzone');let editing=false,hideT=null;
   function setEdit(on){editing=on;document.body.classList.toggle('editing',on);toggle.classList.toggle('active',on);toggle.textContent=on?'Done editing':'Edit text';editable.forEach(el=>el.contentEditable=on?'true':'false');if(!on){try{const o={};editable.forEach((el,i)=>o[i]=el.innerHTML);localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}toggle.classList.remove('show');}}
