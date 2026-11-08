@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agropastoralism in Lamjung</title>
+<meta name="description" content="Retreat or Revitalize? The unsettled futures of agropastoralism among Gurung herders in Lamjung, Nepal — an interactive class deck by Milan Shrestha, PhD.">
+<style>
+/* ===========================================
+   FONTS — Newsreader Medium (headings) + Roboto Condensed (body)
+   =========================================== */
+@font-face{font-family:"Newsreader";font-weight:500;font-style:normal;font-display:swap;src:url(fonts/newsreader-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Newsreader";font-weight:500;font-style:italic;font-display:swap;src:url(fonts/newsreader-latin-500-italic.woff2) format("woff2")}
+@font-face{font-family:"Roboto Condensed";font-weight:400;font-style:normal;font-display:swap;src:url(fonts/roboto-condensed-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Roboto Condensed";font-weight:400;font-style:italic;font-display:swap;src:url(fonts/roboto-condensed-latin-400-italic.woff2) format("woff2")}
+@font-face{font-family:"Roboto Condensed";font-weight:700;font-style:normal;font-display:swap;src:url(fonts/roboto-condensed-latin-700-normal.woff2) format("woff2")}
+
+/* ===========================================
+   THEME TOKENS
+   =========================================== */
+:root{
+  --stage-bg:#0f1411; --slide-bg:#ffffff;
+  --ink:#1E2620; --pine:#2F4A3A; --mist:#EEF2EE; --mist-2:#E1E7E2; --gold:#D99A1E; --gold-deep:#B97F10;
+  --rhodo:#B23A3A; --glacier:#4F7A92; --sage:#7A8C6E; --body:#333B35; --muted:#66706A; --hair:#D5DCD6;
+  --font-display:"Newsreader", Cambria, Georgia, serif;
+  --font-body:"Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+  /* motion: strong ease-out for entrances, short durations for UI */
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1);
+  --t-ui:160ms; --t-enter:520ms;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ===========================================
+   FIXED 16:9 STAGE (frontend-slides viewport-base.css)
+   =========================================== */
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--slide-bg,#fff)}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:var(--slide-bg,#fff)}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+.deck-controls{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:1000}
+@media print{
+  html,body{width:1920px;height:auto;overflow:visible;background:#fff}
+  .deck-viewport{position:static;overflow:visible;background:#fff}
+  .deck-stage{position:static;width:auto;height:auto;transform:none!important;background:none}
+  .slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .deck-controls,.chrome{display:none!important}
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+
+/* ===========================================
+   BASE TYPOGRAPHY
+   =========================================== */
+body{font-family:var(--font-body);color:var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,.serif{font-family:var(--font-display);font-weight:500;letter-spacing:-.01em}
+h2.title{position:absolute;left:96px;top:58px;max-width:1260px;font-size:60px;line-height:1.08;color:var(--pine)}
+.dark h2.title{color:#fff}
+p{font-size:26px;line-height:1.38}
+.lead{font-family:var(--font-display);font-style:italic;font-size:34px;line-height:1.3;color:var(--pine)}
+.k{display:block;font-weight:700;font-size:30px;line-height:1.15;color:var(--pine);margin-bottom:6px}
+.cap{font-size:18px;font-style:italic;color:var(--muted);margin-top:10px}
+.eyebrow{font-size:18px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.slide.dark{background:var(--ink);color:#E6EBE7}
+.dark p{color:#E6EBE7}
+
+/* Content frame: everything between the title and the footer */
+.body{position:absolute;left:96px;right:96px;top:188px;bottom:112px}
+.foot{position:absolute;left:96px;bottom:40px;font-size:17px;color:#7A847C;letter-spacing:.02em}
+.dark .foot{color:#9DA79F}
+
+/* Shared components */
+.ph{display:block;width:100%;height:100%;object-fit:cover;border-radius:18px}
+.card{background:var(--mist);border-radius:20px;padding:30px}
+.ic{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;flex:none}
+.ic svg{width:46%;height:46%;fill:currentColor}
+.num{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-weight:700;color:#fff;flex:none;font-size:26px;width:56px;height:56px}
+.row{display:flex;gap:28px;align-items:flex-start}
+.col{display:flex;flex-direction:column}
+.fill{flex:1;min-height:0}
+
+/* ===========================================
+   MOTION — entrances staggered by --i, ease-out, short
+   =========================================== */
+.r{opacity:0;transform:translateY(18px);transition:opacity var(--t-enter) var(--ease-out),transform var(--t-enter) var(--ease-out);transition-delay:calc(var(--i,0) * 70ms + 80ms)}
+.slide.visible .r{opacity:1;transform:none}
+.r-img{opacity:0;transform:scale(1.035);transition:opacity 700ms var(--ease-out),transform 900ms var(--ease-out);transition-delay:calc(var(--i,0) * 70ms)}
+.slide.visible .r-img{opacity:1;transform:none}
+.slide{transition:opacity 320ms var(--ease-out),visibility 0s linear 320ms}
+.slide.visible{transition:opacity 320ms var(--ease-out),visibility 0s}
+@keyframes kenburns{from{transform:scale(1.0)}to{transform:scale(1.06)}}
+.s-title .bg img{animation:kenburns 24s var(--ease-out) both}
+@media (prefers-reduced-motion: reduce){.r,.r-img{transform:none!important;transition:opacity .2s!important}.s-title .bg img{animation:none}}
+
+/* ===========================================
+   CHROME — TOC (top right), prev/next + counter (bottom right), progress
+   =========================================== */
+.chrome{position:absolute;inset:0;pointer-events:none;z-index:50}
+.toc{position:absolute;top:58px;right:96px;display:flex;gap:12px;pointer-events:auto;transition:opacity 300ms var(--ease-out)}
+.toc a{position:relative;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--mist-2);color:var(--pine);transition:background var(--t-ui) var(--ease-out),color var(--t-ui) var(--ease-out),transform var(--t-ui) var(--ease-out);outline:none}
+.toc a svg{width:24px;height:24px;fill:currentColor}
+.toc a:hover{background:#D3DCD5}
+.toc a:active{transform:scale(.94)}
+.toc a.on{background:var(--gold);color:#fff}
+.toc a:focus-visible{box-shadow:0 0 0 4px var(--gold)}
+.toc a .tip{position:absolute;top:74px;right:50%;transform:translate(50%,-4px);white-space:nowrap;background:var(--ink);color:#fff;font-size:18px;padding:8px 14px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity 150ms var(--ease-out),transform 150ms var(--ease-out)}
+.toc a:hover .tip,.toc a:focus-visible .tip{opacity:1;transform:translate(50%,0)}
+.theme-dark .toc a{background:rgba(255,255,255,.12);color:#E6EBE7}
+.theme-dark .toc a:hover{background:rgba(255,255,255,.2)}
+.theme-dark .toc a.on{background:var(--gold);color:var(--ink)}
+.theme-title .toc{opacity:0;pointer-events:none}
+.nav{position:absolute;right:96px;bottom:28px;display:flex;align-items:center;gap:14px;pointer-events:auto}
+.nav .count{font-size:18px;color:#7A847C;font-variant-numeric:tabular-nums;min-width:74px;text-align:right;margin-right:6px}
+.theme-dark .nav .count,.theme-title .nav .count{color:#C9D1CB}
+.nav button{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--pine);color:#fff;transition:transform var(--t-ui) var(--ease-out),background var(--t-ui) var(--ease-out),opacity 200ms var(--ease-out)}
+.nav button svg{width:22px;height:22px;fill:currentColor}
+.nav button:hover{background:#243A2D}
+.nav button:active{transform:scale(.94)}
+.nav button:focus-visible{box-shadow:0 0 0 4px var(--gold);outline:none}
+.nav button[disabled]{opacity:.28;cursor:default}
+.theme-dark .nav button{background:rgba(255,255,255,.14)}
+.theme-title .nav button{background:rgba(30,38,32,.6)}
+.theme-title .nav #next{background:var(--gold);color:var(--ink)}
+.progress{position:absolute;left:0;top:0;height:6px;background:var(--gold);width:0;transition:width 420ms var(--ease-out)}
+
+/* ===========================================
+   SLIDE 1 — TITLE
+   =========================================== */
+.s-title{background:var(--ink)}
+.s-title .bg{position:absolute;inset:0;overflow:hidden}
+.s-title .bg img{width:100%;height:100%;object-fit:cover;max-width:none;max-height:none}
+.s-title .panel{position:absolute;left:0;top:0;bottom:0;width:1040px;padding:170px 110px 0 96px;background:linear-gradient(90deg,rgba(22,29,24,.94) 0%,rgba(22,29,24,.88) 72%,rgba(22,29,24,0) 100%)}
+.s-title .kick{font-family:var(--font-display);font-style:italic;font-size:42px;color:var(--gold)}
+.s-title h1{font-size:82px;line-height:1.04;color:#fff;margin:18px 0 26px}
+.s-title .sub{font-size:30px;color:#DDE4DE}
+.s-title .by{position:absolute;left:96px;bottom:120px}
+.s-title .by .name{font-family:var(--font-display);font-size:60px;line-height:1.05;color:var(--gold)}
+.s-title .by .aff{font-size:28px;color:#DDE4DE;margin-top:8px}
+
+/* ===========================================
+   SLIDE 4 — BOOK COVERS
+   =========================================== */
+.book{width:220px;height:330px;flex:none;border-radius:4px 10px 10px 4px;padding:22px 18px 18px 26px;position:relative;display:flex;flex-direction:column;box-shadow:0 18px 30px -12px rgba(0,0,0,.35),0 2px 0 rgba(0,0,0,.08);transform:perspective(900px) rotateY(-14deg);transform-origin:left center;transition:transform 420ms var(--ease-out),box-shadow 420ms var(--ease-out)}
+.book::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;border-radius:4px 0 0 4px;background:linear-gradient(90deg,rgba(0,0,0,.28),rgba(0,0,0,.05))}
+.scholar:hover .book{transform:perspective(900px) rotateY(0deg);box-shadow:0 24px 40px -14px rgba(0,0,0,.4)}
+.book .bt{font-family:var(--font-display);font-size:29px;line-height:1.08}
+.book .bs{font-size:16px;font-style:italic;margin-top:8px;line-height:1.25;opacity:.9}
+.book .ba{margin-top:auto;font-size:17px;font-weight:700;line-height:1.2}
+.book .by{font-size:13px;opacity:.85;margin-top:4px}
+.book.b1{background:#E9DDC1;color:#5A3E1B}
+.book.b1 .rule{height:2px;background:#5A3E1B;opacity:.5;margin:12px 0 0;width:60%}
+.book.b2{background:#7A2E2A;color:#fff}
+.book.b3{background:#23384F;color:#fff}
+.book.b3 .rule,.book.b2 .rule{height:2px;background:var(--gold);margin:12px 0 0;width:60%}
+
+.lens{align-self:flex-start;background:#fff;border:2px solid var(--gold);color:var(--pine);font-weight:700;font-size:21px;padding:10px 18px;border-radius:999px}
+.lens::before{content:"Lens · ";color:var(--gold-deep)}
+
+/* ===========================================
+   EXERCISES
+   =========================================== */
+button{font-family:var(--font-body)}
+.btn{cursor:pointer;border:none;border-radius:999px;padding:16px 30px;font-size:24px;font-weight:700;background:var(--pine);color:#fff;transition:transform var(--t-ui) var(--ease-out),background var(--t-ui) var(--ease-out)}
+.btn:hover{background:#243A2D}
+.btn.alt{background:var(--mist-2);color:var(--pine)}
+.btn.alt:hover{background:#D3DCD5}
+.btn:active{transform:scale(.96)}
+.btn:focus-visible,.pcard:focus-visible,.bin:focus-visible{outline:4px solid var(--gold);outline-offset:3px}
+.pool{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;min-height:236px;align-content:start}
+.pcard{background:#fff;border:2px solid var(--gold);border-radius:14px;padding:14px 18px;font-size:22px;line-height:1.28;cursor:pointer;text-align:left;color:var(--ink);transition:transform var(--t-ui) var(--ease-out),box-shadow var(--t-ui) var(--ease-out),background var(--t-ui) var(--ease-out);animation:pop 240ms var(--ease-out) both}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 10px 20px -10px rgba(0,0,0,.25)}
+.pcard:active{transform:scale(.97)}
+.pcard.sel{background:#FFF4DA;box-shadow:0 0 0 4px var(--gold)}
+.pcard b{color:var(--rhodo);margin-right:8px}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.bins{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;flex:1;min-height:0}
+.bin{background:var(--mist);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:3px dashed transparent;text-align:left;color:var(--ink);transition:border-color var(--t-ui) var(--ease-out),background var(--t-ui) var(--ease-out)}
+.bin.armed{border-color:var(--gold)}
+.bin.armed:hover{background:#FFF4DA}
+.bin h3{display:flex;align-items:center;gap:12px;font-family:var(--font-body);font-weight:700;font-size:24px;color:var(--pine);letter-spacing:0}
+.bin h3 .ic{width:46px;height:46px;background:var(--pine)}
+.chip{background:#fff;border-radius:10px;padding:10px 12px;font-size:19px;line-height:1.25;border:2px solid #CFD8D1;animation:pop 220ms var(--ease-out) both;transition:border-color 200ms,background 200ms}
+.chip b{color:var(--rhodo)}
+.chip.ok{border-color:#2E7D4F;background:#E7F3EB}
+.chip.bad{border-color:var(--rhodo);background:#FBE9E9}
+.fb{font-size:23px}
+.drv{display:grid;grid-template-columns:330px 1fr 120px;align-items:center;gap:22px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.drv label b{display:block;font-size:24px;color:var(--pine)}
+.drv label span{display:block;font-size:18px;color:var(--muted);line-height:1.25;margin-top:2px}
+.drv .v{font-size:22px;font-weight:700;text-align:right;color:var(--pine)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:999px;background:var(--mist-2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:var(--pine);border:4px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform var(--t-ui) var(--ease-out)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--pine);border:4px solid #fff}
+input[type=range]:focus-visible{box-shadow:0 0 0 4px var(--gold)}
+.scen{border-radius:20px;padding:26px 30px;color:#fff;transition:background-color 360ms var(--ease-out)}
+.scen h3{font-size:46px;line-height:1}
+.scen .sc{font-family:var(--font-body);font-size:22px;opacity:.85;margin-left:12px;font-weight:400}
+.scen p{font-size:23px;margin-top:10px;color:#fff}
+.role{display:flex;gap:18px;align-items:center;background:var(--mist);border-radius:18px;padding:20px}
+.role .ic{width:76px;height:76px;background:var(--rhodo)}
+.role.flip{animation:pop 260ms var(--ease-out)}
+.timer{font-variant-numeric:tabular-nums;font-size:54px;font-weight:700;color:var(--pine);font-family:var(--font-body)}
+
+/* ===========================================
+   INLINE EDITING (press E)
+   =========================================== */
+.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000}
+.edit-toggle{position:fixed;top:16px;left:16px;z-index:10001;border:none;border-radius:999px;padding:10px 16px;font:700 14px var(--font-body);background:#fff;color:var(--pine);box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity 200ms var(--ease-out);cursor:pointer}
+.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}
+.edit-toggle.active{background:var(--gold);color:var(--ink)}
+body.editing [data-edit]{outline:2px dashed rgba(217,154,30,.7);outline-offset:4px;cursor:text}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- === 1 TITLE === -->
+<section class="slide s-title" data-theme="title" data-sec="0">
+  <div class="bg"><img src="img/title_himal.jpg" alt="Snow-covered Lamjung and Annapurna range above forested hills"></div>
+  <div class="panel">
+    <div class="kick r" style="--i:0" data-edit>Retreat or Revitalize?</div>
+    <h1 class="r" style="--i:1" data-edit>The Unsettled Futures of Agropastoralism in Lamjung, Nepal</h1>
+    <div class="sub r" style="--i:2" data-edit>Gurung herders, high pastures and the choices ahead</div>
+  </div>
+  <div class="by">
+    <div class="name r" style="--i:3" data-edit>Milan Shrestha, PhD</div>
+    <div class="aff r" style="--i:4" data-edit>School of Sustainability, Arizona State University</div>
+  </div>
+</section>
+
+<!-- === 2 BIG IDEAS === -->
+<section class="slide" data-sec="0">
+  <h2 class="title r" data-edit>Big ideas for today</h2>
+  <div class="body row" style="gap:64px;align-items:stretch">
+    <div style="width:560px;flex:none" class="r-img"><img class="ph" src="img/sheep_peaks.jpg" alt="Flock of sheep below snow peaks"></div>
+    <div class="col fill" style="justify-content:space-between">
+      <p class="lead r" style="--i:1" data-edit>Uncertainty is a harsh reality in mountains. Systems thinking helps us frame the social, ecological and technical systems of mountain agriculture in a climate-challenged world.</p>
+      <div class="row r" style="--i:2"><span class="ic" style="width:104px;height:104px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"></path></svg></span><div><span class="k" data-edit>Decline of transhumance</span><p data-edit>Markets, schooling and out-migration are pulling labour away from farming and herding (Aryal et al. 2014; Childs et al. 2014).</p></div></div>
+      <div class="row r" style="--i:3"><span class="ic" style="width:104px;height:104px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"></path></svg></span><div><span class="k" data-edit>Seeking climate resilience</span><p data-edit>Agropastoralism can be an adaptation in marginal lands, spreading risk across altitudes and seasons (FAO 2013; IPCC 2014).</p></div></div>
+      <div class="row r" style="--i:4"><span class="ic" style="width:104px;height:104px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M64 96H0c0 123.7 100.3 224 224 224v144c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V320C288 196.3 187.7 96 64 96zm384-64c-84.2 0-157.4 46.5-195.7 115.2 27.7 30.2 48.2 66.9 59 107.6C424 243.1 512 147.9 512 32h-64z"></path></svg></span><div><span class="k" data-edit>Food security and sovereignty</span><p data-edit>Who grows, herds and decides what mountain households eat, and on whose terms?</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- === 3 GURUNGS === -->
+<section class="slide" data-sec="1">
+  <h2 class="title r" data-edit>Who are the Gurungs (Tamu)?</h2>
+  <div class="body row" style="gap:48px;align-items:stretch">
+    <div class="col" style="width:600px;flex:none">
+      <div class="fill r-img"><img class="ph" src="img/elder.jpg" alt="Portrait of an elderly Gurung man wearing a dhaka topi"></div>
+      <div class="cap">Elder, upper Madi valley</div>
+    </div>
+    <div class="fill" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px">
+      <div class="card r" style="--i:1"><div class="row" style="align-items:center;gap:18px;margin-bottom:16px"><span class="ic" style="width:68px;height:68px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"></path></svg></span><span class="k" style="margin:0" data-edit>People and language</span></div><p data-edit>Gurung is the Nepali name; the people call themselves <b>Tamu</b>. Their language, Tamu Kyi, is Tibeto-Burman.</p></div>
+      <div class="card r" style="--i:2"><div class="row" style="align-items:center;gap:18px;margin-bottom:16px"><span class="ic" style="width:68px;height:68px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 384 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"></path></svg></span><span class="k" style="margin:0" data-edit>Homeland</span></div><p data-edit>Southern slopes of the Annapurna and Lamjung Himal, especially Lamjung and Kaski. In Lamjung, about 28% of residents speak Gurung as a first language (2021 census).</p></div>
+      <div class="card r" style="--i:3"><div class="row" style="align-items:center;gap:18px;margin-bottom:16px"><span class="ic" style="width:68px;height:68px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M272 191.91c-17.6 0-32 14.4-32 32v80c0 8.84-7.16 16-16 16s-16-7.16-16-16v-76.55c0-17.39 4.72-34.47 13.69-49.39l77.75-129.59c9.09-15.16 4.19-34.81-10.97-43.91-14.45-8.67-32.72-4.3-42.3 9.21-.2.23-.62.21-.79.48l-117.26 175.9C117.56 205.9 112 224.31 112 243.29v80.23l-90.12 30.04A31.974 31.974 0 0 0 0 383.91v96c0 10.82 8.52 32 32 32 2.69 0 5.41-.34 8.06-1.03l179.19-46.62C269.16 449.99 304 403.8 304 351.91v-128c0-17.6-14.4-32-32-32zm346.12 161.73L528 323.6v-80.23c0-18.98-5.56-37.39-16.12-53.23L394.62 14.25c-.18-.27-.59-.24-.79-.48-9.58-13.51-27.85-17.88-42.3-9.21-15.16 9.09-20.06 28.75-10.97 43.91l77.75 129.59c8.97 14.92 13.69 32 13.69 49.39V304c0 8.84-7.16 16-16 16s-16-7.16-16-16v-80c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 51.89 34.84 98.08 84.75 112.34l179.19 46.62c2.66.69 5.38 1.03 8.06 1.03 23.48 0 32-21.18 32-32v-96c0-13.77-8.81-25.99-21.88-30.35z"></path></svg></span><span class="k" style="margin:0" data-edit>Ritual life</span></div><p data-edit>A blend of Bon, Buddhist and Hindu practice. Pachyu and ghyabri (klehpri) priests guide souls and recite <i>pye</i>; lamas lead Buddhist rites.</p></div>
+      <div class="card r" style="--i:4"><div class="row" style="align-items:center;gap:18px;margin-bottom:16px"><span class="ic" style="width:68px;height:68px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"></path></svg></span><span class="k" style="margin:0" data-edit>Livelihoods</span></div><p data-edit>Terraced farming plus sheep, goats and cattle on high pastures; Gurkha service since 1816; and today remittances and tourism.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- === 4 ANTHROPOLOGISTS + BOOK COVERS === -->
+<section class="slide" data-sec="1">
+  <h2 class="title r" data-edit>Anthropologists who studied the Gurungs</h2>
+  <div class="body col" style="gap:26px">
+    <div class="fill" style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+      <div class="card col scholar r" style="--i:1;gap:20px">
+        <div class="row" style="gap:26px">
+          <div class="book b1" role="img" aria-label="Book: Les Gurungs, by Bernard Pignède, Mouton 1966"><div class="bt">Les Gurungs</div><div class="rule"></div><div class="bs">Une population himalayenne du Népal</div><div class="ba">Bernard Pignède</div><div class="by">Mouton · 1966</div></div>
+          <div><h3 style="font-size:36px;line-height:1.08;color:var(--pine)" data-edit>Bernard Pignède</h3><div style="font-size:19px;color:var(--muted);margin:6px 0 14px" data-edit>1932–1961 · French</div><div style="font-size:22px;font-weight:700;color:var(--rhodo);line-height:1.25" data-edit>Seven months in Mohoriya (Kaski), 1958</div></div>
+        </div>
+        <p style="font-size:25px" data-edit>First full ethnography of the Gurungs: clans, kinship, the <i>rodhi</i>, village politics and ritual. He died at 29; Louis Dumont saw the book into print.</p>
+        <div class="lens" data-edit>Social structure: clans, kinship, ritual</div>
+        <p style="font-size:17px;font-style:italic;color:#55605A;margin-top:auto" data-edit><i>Les Gurungs</i> (Mouton, 1966); English ed. <i>The Gurungs</i> (1993), trans. &amp; ed. Macfarlane and Harrison</p>
+      </div>
+      <div class="card col scholar r" style="--i:2;gap:20px">
+        <div class="row" style="gap:26px">
+          <div class="book b2" role="img" aria-label="Book: The Gurungs of Nepal, by Donald A. Messerschmidt, Aris and Phillips 1976"><div class="bt">The Gurungs of Nepal</div><div class="rule"></div><div class="bs">Conflict and Change in a Village Society</div><div class="ba">Donald A. Messerschmidt</div><div class="by">Aris &amp; Phillips · 1976</div></div>
+          <div><h3 style="font-size:36px;line-height:1.08;color:var(--pine)" data-edit>Don Messerschmidt</h3><div style="font-size:19px;color:var(--muted);margin:6px 0 14px" data-edit>American · fieldwork early 1970s</div><div style="font-size:22px;font-weight:700;color:var(--rhodo);line-height:1.25" data-edit>Gurung villages of Lamjung District</div></div>
+        </div>
+        <p style="font-size:25px" data-edit>Conflict, change and ecology: how Gurung villages adapted pastoral and farming practice as forests, trade and politics changed. First anthropologist to visit Kohla, the ancestral Tamu site (1972).</p>
+        <div class="lens" data-edit>Ecology and change: adaptation and conflict</div>
+        <p style="font-size:17px;font-style:italic;color:#55605A;margin-top:auto" data-edit><i>The Gurungs of Nepal</i> (1976); “Ecological change and adaptation among the Gurungs,” <i>Human Ecology</i> 4: 167–185 (1976)</p>
+      </div>
+      <div class="card col scholar r" style="--i:3;gap:20px">
+        <div class="row" style="gap:26px">
+          <div class="book b3" role="img" aria-label="Book: Resources and Population, by Alan Macfarlane, Cambridge University Press 1976"><div class="bt">Resources and Population</div><div class="rule"></div><div class="bs">A Study of the Gurungs of Nepal</div><div class="ba">Alan Macfarlane</div><div class="by">Cambridge UP · 1976</div></div>
+          <div><h3 style="font-size:36px;line-height:1.08;color:var(--pine)" data-edit>Alan Macfarlane</h3><div style="font-size:19px;color:var(--muted);margin:6px 0 14px" data-edit>b. 1941 · Cambridge</div><div style="font-size:22px;font-weight:700;color:var(--rhodo);line-height:1.25" data-edit>Thak village, north of Pokhara, from 1968</div></div>
+        </div>
+        <p style="font-size:25px" data-edit>How population growth pressed on land, forest and labour. He has returned to Thak almost every year since 1986, a rare long-term record of change.</p>
+        <div class="lens" data-edit>Population and resources: pressure over time</div>
+        <p style="font-size:17px;font-style:italic;color:#55605A;margin-top:auto" data-edit><i>Resources and Population</i> (Cambridge UP, 1976); <i>A Guide to the Gurungs</i> (with Indra Bahadur Gurung, 1990)</p>
+      </div>
+    </div>
+    <p class="r" style="--i:4;font-size:23px" data-edit><b style="color:var(--pine)">Gurung voices too:</b> Tamu scholars and the Tamu Pye Lhu Sangh now co-produce this history, e.g. the Kohla Project (Pettigrew &amp; Tamu 1999). Who gets to tell the story of a people?</p>
+  </div>
+</section>
+
+<!-- === 5 MAP === -->
+<section class="slide" data-sec="2">
+  <h2 class="title r" data-edit>The upper Madi river basin</h2>
+  <div class="body row" style="gap:64px;align-items:stretch">
+    <div class="r-img" style="width:1010px;flex:none"><img class="ph" style="object-fit:contain;background:#fff;border:1px solid var(--hair)" src="img/map_madi.jpg" alt="Map of the upper Madi basin with herders' migration tracks and camp sites"></div>
+    <div class="col fill" style="justify-content:space-between;padding:10px 0">
+      <div class="row r" style="--i:1;gap:22px"><span class="num" style="background:var(--pine)">1</span><div><span class="k" data-edit>Two villages, one basin</span><p data-edit>Bhujung (Lamjung) and Siklis (Kaski) send flocks up the Madi valley toward Lamjung Himal.</p></div></div>
+      <div class="row r" style="--i:2;gap:22px"><span class="num" style="background:var(--pine)">2</span><div><span class="k" data-edit>Migration tracks</span><p data-edit>Red dotted lines trace herders' routes between village, forest and alpine camps (<i>goth</i>), up to about 3,900 m.</p></div></div>
+      <div class="row r" style="--i:3;gap:22px"><span class="num" style="background:var(--pine)">3</span><div><span class="k" data-edit>Vertical zones</span><p data-edit>Terraced fields, mid-hill forest and alpine meadows are linked by the moving flock.</p></div></div>
+      <div class="row r" style="--i:4;gap:22px"><span class="num" style="background:var(--pine)">4</span><div><span class="k" data-edit>Ecosystem services</span><p data-edit>Regulating services, wildlife corridors and biodiversity all depend on how pastures are used.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- === 6 ADAPTATION === -->
+<section class="slide" data-sec="2">
+  <h2 class="title r" data-edit>Agropastoralism as adaptation</h2>
+  <div class="body row" style="gap:48px;align-items:stretch">
+    <div class="col" style="width:980px;flex:none">
+      <div class="fill r-img"><img class="ph" src="img/hut_goth.jpg" alt="Herders' hut on a steep forested hillside"></div>
+      <div class="cap">A herders' camp (goth) on the way to the high pastures</div>
+      <p class="r" style="--i:2;margin-top:18px" data-edit><b style="color:var(--pine)">Animals supplement crops across a vertical landscape:</b> verticality and production zones, interdependence norms, opportunistic seasonal migration and robust rules in use.</p>
+    </div>
+    <div class="fill" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:26px">
+      <div class="card col r" style="--i:1;align-items:center;justify-content:center;text-align:center"><span class="ic" style="width:96px;height:96px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M634.92 462.7l-288-448C341.03 5.54 330.89 0 320 0s-21.03 5.54-26.92 14.7l-288 448a32.001 32.001 0 0 0-1.17 32.64A32.004 32.004 0 0 0 32 512h576c11.71 0 22.48-6.39 28.09-16.67a31.983 31.983 0 0 0-1.17-32.63zM320 91.18L405.39 224H320l-64 64-38.06-38.06L320 91.18z"></path></svg></span><span class="k" style="margin-top:18px" data-edit>Meadows</span><p style="font-size:22px" data-edit>Alpine grass that crops cannot use becomes food.</p></div>
+      <div class="card col r" style="--i:2;align-items:center;justify-content:center;text-align:center"><span class="ic" style="width:96px;height:96px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M576 216v16c0 13.255-10.745 24-24 24h-8l-26.113 182.788C514.509 462.435 494.257 480 470.37 480H105.63c-23.887 0-44.139-17.565-47.518-41.212L32 256h-8c-13.255 0-24-10.745-24-24v-16c0-13.255 10.745-24 24-24h67.341l106.78-146.821c10.395-14.292 30.407-17.453 44.701-7.058 14.293 10.395 17.453 30.408 7.058 44.701L170.477 192h235.046L326.12 82.821c-10.395-14.292-7.234-34.306 7.059-44.701 14.291-10.395 34.306-7.235 44.701 7.058L484.659 192H552c13.255 0 24 10.745 24 24zM312 392V280c0-13.255-10.745-24-24-24s-24 10.745-24 24v112c0 13.255 10.745 24 24 24s24-10.745 24-24zm112 0V280c0-13.255-10.745-24-24-24s-24 10.745-24 24v112c0 13.255 10.745 24 24 24s24-10.745 24-24zm-224 0V280c0-13.255-10.745-24-24-24s-24 10.745-24 24v112c0 13.255 10.745 24 24 24s24-10.745 24-24z"></path></svg></span><span class="k" style="margin-top:18px" data-edit>Meat</span><p style="font-size:22px" data-edit>Sheep and goats sold for Dashain and local feasts.</p></div>
+      <div class="card col r" style="--i:3;align-items:center;justify-content:center;text-align:center"><span class="ic" style="width:96px;height:96px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M480 32H32C12.5 32-2.4 49.2.3 68.5l56 356.5c4.5 31.5 31.5 54.9 63.4 54.9h273c31.8 0 58.9-23.4 63.4-54.9l55.6-356.5C514.4 49.2 499.5 32 480 32zm-37.4 64l-30 192h-313L69.4 96h373.2z"></path></svg></span><span class="k" style="margin-top:18px" data-edit>Milk</span><p style="font-size:22px" data-edit>Milk, ghee and cheese from cattle and buffalo.</p></div>
+      <div class="card col r" style="--i:4;align-items:center;justify-content:center;text-align:center"><span class="ic" style="width:96px;height:96px;background:var(--gold)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M184.561 261.903c3.232 13.997-12.123 24.635-24.068 17.168l-40.736-25.455-50.867 81.402C55.606 356.273 70.96 384 96.012 384H148c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12H96.115c-75.334 0-121.302-83.048-81.408-146.88l50.822-81.388-40.725-25.448c-12.081-7.547-8.966-25.961 4.879-29.158l110.237-25.45c8.611-1.988 17.201 3.381 19.189 11.99l25.452 110.237zm98.561-182.915l41.289 66.076-40.74 25.457c-12.051 7.528-9 25.953 4.879 29.158l110.237 25.45c8.672 1.999 17.215-3.438 19.189-11.99l25.45-110.237c3.197-13.844-11.99-24.719-24.068-17.168l-40.687 25.424-41.263-66.082c-37.521-60.033-125.209-60.171-162.816 0l-17.963 28.766c-3.51 5.62-1.8 13.021 3.82 16.533l33.919 21.195c5.62 3.512 13.024 1.803 16.536-3.817l17.961-28.743c12.712-20.341 41.973-19.676 54.257-.022zM497.288 301.12l-27.515-44.065c-3.511-5.623-10.916-7.334-16.538-3.821l-33.861 21.159c-5.62 3.512-7.33 10.915-3.818 16.536l27.564 44.112c13.257 21.211-2.057 48.96-27.136 48.96H320V336.02c0-14.213-17.242-21.383-27.313-11.313l-80 79.981c-6.249 6.248-6.249 16.379 0 22.627l80 79.989C302.689 517.308 320 510.3 320 495.989V448h95.88c75.274 0 121.335-82.997 81.408-146.88z"></path></svg></span><span class="k" style="margin-top:18px" data-edit>Manure</span><p style="font-size:22px" data-edit>Flocks folded on terraces fertilise the next crop.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- === 7 SEASONS === -->
+<section class="slide" data-sec="2">
+  <h2 class="title r" data-edit>A year on the move</h2>
+  <div class="body row" style="gap:56px;align-items:stretch">
+    <div class="col fill" style="gap:22px">
+      <div class="row fill r" style="--i:1;align-items:center"><div class="col" style="width:230px;height:100%;border-radius:18px;background:var(--sage);color:#fff;align-items:center;justify-content:center;flex:none"><b style="font-size:34px">Spring</b><span style="font-size:20px">Mar–May</span></div><p data-edit>Flocks climb through forest camps as snow melts; fields are ploughed and planted below.</p></div>
+      <div class="row fill r" style="--i:2;align-items:center"><div class="col" style="width:230px;height:100%;border-radius:18px;background:var(--pine);color:#fff;align-items:center;justify-content:center;flex:none"><b style="font-size:34px">Monsoon</b><span style="font-size:20px">Jun–Aug</span></div><p data-edit>Highest alpine pastures (<i>kharka</i>) at about 3,500–4,000 m, away from growing crops.</p></div>
+      <div class="row fill r" style="--i:3;align-items:center"><div class="col" style="width:230px;height:100%;border-radius:18px;background:var(--gold);color:#fff;align-items:center;justify-content:center;flex:none"><b style="font-size:34px">Autumn</b><span style="font-size:20px">Sep–Nov</span></div><p data-edit>Flocks descend; animals are sold for the Dashain festival.</p></div>
+      <div class="row fill r" style="--i:4;align-items:center"><div class="col" style="width:230px;height:100%;border-radius:18px;background:var(--glacier);color:#fff;align-items:center;justify-content:center;flex:none"><b style="font-size:34px">Winter</b><span style="font-size:20px">Dec–Feb</span></div><p data-edit>Lower forests and fallow terraces; flocks are folded on fields, leaving manure.</p></div>
+      <div class="cap" style="margin:0">General pattern only; timing varies by flock, village and year.</div>
+    </div>
+    <div class="r-img" style="width:760px;flex:none"><img class="ph" src="img/flock_meadow.jpg" alt="Mixed flock of sheep and goats on an alpine meadow"></div>
+  </div>
+</section>
+
+<!-- === 8 GOVERNANCE === -->
+<section class="slide" data-sec="2">
+  <h2 class="title r" data-edit>Governance of transhumance</h2>
+  <div class="body row" style="gap:64px;align-items:stretch">
+    <div class="col" style="width:880px;flex:none">
+      <div class="fill r-img"><img class="ph" src="img/meeting.jpg" alt="Villagers seated in a circle on a stone courtyard during a meeting"></div>
+      <div class="cap">Villagers and herders meet to set grazing rules</div>
+      <p class="lead r" style="--i:2;margin-top:20px" data-edit>“Gurung <i>thiti</i> is equally powerful, if not more, than the Raja's <i>riti</i>.”</p>
+    </div>
+    <div class="col fill" style="justify-content:space-between;padding:6px 0">
+      <div class="row r" style="--i:1;gap:26px"><span class="num" style="background:var(--rhodo);width:76px;height:76px;font-size:32px">1</span><div><div class="eyebrow">Stakeholders</div><span class="k" style="font-size:34px" data-edit>Coproduction</span><p data-edit>Municipality, shepherds, government agencies, ACAP, youth groups and mothers' groups share decisions.</p></div></div>
+      <div class="row r" style="--i:2;gap:26px"><span class="num" style="background:var(--pine);width:76px;height:76px;font-size:32px">2</span><div><div class="eyebrow">Maintaining dharma</div><span class="k" style="font-size:34px" data-edit>Enforcing norms</span><p data-edit>Customary rules (<i>thiti</i>) carry moral weight that can match or exceed state law (<i>riti</i>).</p></div></div>
+      <div class="row r" style="--i:3;gap:26px"><span class="num" style="background:var(--gold);width:76px;height:76px;font-size:32px">3</span><div><div class="eyebrow">Rules in use</div><span class="k" style="font-size:34px" data-edit>Formal rules</span><p data-edit>Boundaries, planning, monitoring, sanctions and conflict resolution.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- === 9 DRIVERS === -->
+<section class="slide" data-sec="3">
+  <h2 class="title r" data-edit>What is unsettling the system?</h2>
+  <div class="body col" style="gap:44px">
+    <div class="fill r-img"><img class="ph" src="img/newspaper_goats.jpg" alt="A newspaper in the foreground with goats grazing on a terrace behind"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:56px;height:300px">
+      <div class="r" style="--i:1"><div class="row" style="align-items:center;gap:20px;margin-bottom:18px"><span class="ic" style="width:80px;height:80px;background:var(--rhodo)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"></path></svg></span><span class="k" style="font-size:36px;margin:0" data-edit>Market economy</span></div><ul style="padding-left:28px;font-size:25px;line-height:1.45"><li data-edit>The global economy has made small-scale farming look impractical</li><li data-edit>Growing pull toward off-farm jobs</li></ul></div>
+      <div class="r" style="--i:2"><div class="row" style="align-items:center;gap:20px;margin-bottom:18px"><span class="ic" style="width:80px;height:80px;background:var(--rhodo)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M501.62 92.11L267.24 2.04a31.958 31.958 0 0 0-22.47 0L10.38 92.11A16.001 16.001 0 0 0 0 107.09V144c0 8.84 7.16 16 16 16h480c8.84 0 16-7.16 16-16v-36.91c0-6.67-4.14-12.64-10.38-14.98zM64 192v160H48c-8.84 0-16 7.16-16 16v48h448v-48c0-8.84-7.16-16-16-16h-16V192h-64v160h-96V192h-64v160h-96V192H64zm432 256H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h480c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"></path></svg></span><span class="k" style="font-size:36px;margin:0" data-edit>Institutions</span></div><ul style="padding-left:28px;font-size:25px;line-height:1.45"><li data-edit>Customary grazing rights abolished or weakened</li><li data-edit>New bodies (VDCs, ACAP) with their own rules</li><li data-edit>Rules in use depend on norms and trust</li></ul></div>
+      <div class="r" style="--i:3"><div class="row" style="align-items:center;gap:20px;margin-bottom:18px"><span class="ic" style="width:80px;height:80px;background:var(--rhodo)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z"></path></svg></span><span class="k" style="font-size:36px;margin:0" data-edit>Migration</span></div><ul style="padding-left:28px;font-size:25px;line-height:1.45"><li data-edit>First waves of labour migration in the 1960s–80s</li><li data-edit>Youth leave for Besisahar, Pokhara, Kathmandu, London and beyond</li><li data-edit>Labour shortages for herding and farming</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- === 10 CHALLENGES === -->
+<section class="slide dark" data-theme="dark" data-sec="3">
+  <h2 class="title r" data-edit>Challenges ahead</h2>
+  <div class="body col" style="gap:44px">
+    <div class="fill r-img"><img class="ph" src="img/sheep_lupins.jpg" alt="Two sheep resting among blue lupin flowers"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:56px">
+      <div class="r" style="--i:1"><div class="row" style="align-items:center;gap:20px;margin-bottom:14px"><span class="ic" style="width:80px;height:80px;background:var(--gold);color:var(--ink)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M634.92 462.7l-288-448C341.03 5.54 330.89 0 320 0s-21.03 5.54-26.92 14.7l-288 448a32.001 32.001 0 0 0-1.17 32.64A32.004 32.004 0 0 0 32 512h576c11.71 0 22.48-6.39 28.09-16.67a31.983 31.983 0 0 0-1.17-32.63zM320 91.18L405.39 224H320l-64 64-38.06-38.06L320 91.18z"></path></svg></span><b style="font-size:34px;color:var(--gold)" data-edit>Adaptive practices</b></div><p data-edit>Retreat or revitalize? Who will continue herding?</p></div>
+      <div class="r" style="--i:2"><div class="row" style="align-items:center;gap:20px;margin-bottom:14px"><span class="ic" style="width:80px;height:80px;background:var(--gold);color:var(--ink)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"></path></svg></span><b style="font-size:34px;color:var(--gold)" data-edit>Local economy</b></div><p data-edit>Agricultural change, labour shortage, tourism and remittances.</p></div>
+      <div class="r" style="--i:3"><div class="row" style="align-items:center;gap:20px;margin-bottom:14px"><span class="ic" style="width:80px;height:80px;background:var(--gold);color:var(--ink)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M192 384c0 35.346-28.654 64-64 64s-64-28.654-64-64c0-23.685 12.876-44.349 32-55.417V224c0-17.673 14.327-32 32-32s32 14.327 32 32v104.583c19.124 11.068 32 31.732 32 55.417zm32-84.653c19.912 22.563 32 52.194 32 84.653 0 70.696-57.303 128-128 128-.299 0-.609-.001-.909-.003C56.789 511.509-.357 453.636.002 383.333.166 351.135 12.225 321.755 32 299.347V96c0-53.019 42.981-96 96-96s96 42.981 96 96v203.347zM208 384c0-34.339-19.37-52.19-32-66.502V96c0-26.467-21.533-48-48-48S80 69.533 80 96v221.498c-12.732 14.428-31.825 32.1-31.999 66.08-.224 43.876 35.563 80.116 79.423 80.42L128 464c44.112 0 80-35.888 80-80z"></path></svg></span><b style="font-size:34px;color:var(--gold)" data-edit>Climate change</b></div><p data-edit>Extreme events, droughts and declining access to water.</p></div>
+    </div>
+    <p class="lead r" style="--i:4;color:#fff" data-edit>Ethnoecological knowledge and institutional analysis are key to understanding risk perceptions and adaptive measures.</p>
+  </div>
+</section>
+
+<!-- === 11 STRATEGIES === -->
+<section class="slide" data-sec="3">
+  <h2 class="title r" data-edit>How herders adapt: five strategies</h2>
+  <div class="body row" style="gap:64px;align-items:stretch">
+    <div class="col fill" style="justify-content:space-between">
+      <div class="row r" style="--i:1;align-items:center;gap:26px"><span class="ic" style="width:92px;height:92px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 320h-96c-17.6 0-32-14.4-32-32s14.4-32 32-32h96s96-107 96-160-43-96-96-96-96 43-96 96c0 25.5 22.2 63.4 45.3 96H320c-52.9 0-96 43.1-96 96s43.1 96 96 96h96c17.6 0 32 14.4 32 32s-14.4 32-32 32H185.5c-16 24.8-33.8 47.7-47.3 64H416c52.9 0 96-43.1 96-96s-43.1-96-96-96zm0-256c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM96 256c-53 0-96 43-96 96s96 160 96 160 96-107 96-160-43-96-96-96zm0 128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg></span><div><span class="k" data-edit>Mobility</span><p data-edit>Move animals across space to where grass and water are.</p></div></div>
+      <div class="row r" style="--i:2;align-items:center;gap:26px"><span class="ic" style="width:92px;height:92px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M504 352H136.4c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8H504c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm0 96H136.1c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm0-192H136.6c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8H504c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm106.5-139L338.4 3.7a48.15 48.15 0 0 0-36.9 0L29.5 117C11.7 124.5 0 141.9 0 161.3V504c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8V256c0-17.6 14.6-32 32.6-32h382.8c18 0 32.6 14.4 32.6 32v248c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8V161.3c0-19.4-11.7-36.8-29.5-44.3z"></path></svg></span><div><span class="k" data-edit>Storage</span><p data-edit>Hold fodder, grain and seed across time.</p></div></div>
+      <div class="row r" style="--i:3;align-items:center;gap:26px"><span class="ic" style="width:92px;height:92px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M504.971 359.029c9.373 9.373 9.373 24.569 0 33.941l-80 79.984c-15.01 15.01-40.971 4.49-40.971-16.971V416h-58.785a12.004 12.004 0 0 1-8.773-3.812l-70.556-75.596 53.333-57.143L352 336h32v-39.981c0-21.438 25.943-31.998 40.971-16.971l80 79.981zM12 176h84l52.781 56.551 53.333-57.143-70.556-75.596A11.999 11.999 0 0 0 122.785 96H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12zm372 0v39.984c0 21.46 25.961 31.98 40.971 16.971l80-79.984c9.373-9.373 9.373-24.569 0-33.941l-80-79.981C409.943 24.021 384 34.582 384 56.019V96h-58.785a12.004 12.004 0 0 0-8.773 3.812L96 336H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h110.785c3.326 0 6.503-1.381 8.773-3.812L352 176h32z"></path></svg></span><div><span class="k" data-edit>Diversification</span><p data-edit>Spread income and assets across many activities.</p></div></div>
+      <div class="row r" style="--i:4;align-items:center;gap:26px"><span class="ic" style="width:92px;height:92px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M488 192H336v56c0 39.7-32.3 72-72 72s-72-32.3-72-72V126.4l-64.9 39C107.8 176.9 96 197.8 96 220.2v47.3l-80 46.2C.7 322.5-4.6 342.1 4.3 357.4l80 138.6c8.8 15.3 28.4 20.5 43.7 11.7L231.4 448H368c35.3 0 64-28.7 64-64h16c17.7 0 32-14.3 32-32v-64h8c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24zm147.7-37.4L555.7 16C546.9.7 527.3-4.5 512 4.3L408.6 64H306.4c-12 0-23.7 3.4-33.9 9.7L239 94.6c-9.4 5.8-15 16.1-15 27.1V248c0 22.1 17.9 40 40 40s40-17.9 40-40v-88h184c30.9 0 56 25.1 56 56v28.5l80-46.2c15.3-8.9 20.5-28.4 11.7-43.7z"></path></svg></span><div><span class="k" data-edit>Communal pooling</span><p data-edit>Share labour, animals and risk across households.</p></div></div>
+      <div class="row r" style="--i:5;align-items:center;gap:26px"><span class="ic" style="width:92px;height:92px;background:var(--pine)"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z"></path></svg></span><div><span class="k" data-edit>Exchange</span><p data-edit>Trade with markets and other villages to fill gaps.</p></div></div>
+      <div class="cap" style="margin:0">Adapted from Agrawal (2008). Each works through adaptive learning: reactive and anticipatory adjustments, scheduling and opportunistic extraction.</div>
+    </div>
+    <div class="r-img" style="width:820px;flex:none"><img class="ph" src="img/flock_dusk.jpg" alt="Large flock beside a hut in evening mist"></div>
+  </div>
+</section>
+
+<!-- === 12 EXERCISE 1 === -->
+<section class="slide" id="ex1" data-sec="4">
+  <h2 class="title r" data-edit>Exercise 1 · Sort the strategy</h2>
+  <div class="body col" style="gap:20px">
+    <p class="r" style="--i:1;font-size:24px" data-edit>Click a practice card, then click the strategy it belongs to. Press <b>Check</b> when all eight are placed. Some cards are debatable; be ready to defend your choice.</p>
+    <div class="pool r" style="--i:2" id="pool"></div>
+    <div class="bins r" style="--i:3" id="bins"></div>
+    <div class="row r" style="--i:4;align-items:center;gap:18px"><button class="btn" id="check">Check answers</button><button class="btn alt" id="reset1">Reset</button><div class="fb" id="fb1" aria-live="polite"></div></div>
+  </div>
+</section>
+
+<!-- === 13 EXERCISE 2 === -->
+<section class="slide" id="ex2" data-sec="4">
+  <h2 class="title r" data-edit>Uttarkanya Rural Municipality 2030</h2>
+  <div class="body col" style="gap:20px">
+    <p class="r" style="--i:1;font-size:24px" data-edit><b style="color:var(--rhodo)">Exercise 2 · Futures council.</b> In groups of six, draw a role, set the five drivers as your group expects them in 2030, and read the scenario. Then agree one policy that moves it toward revitalization.</p>
+    <div class="row fill" style="gap:48px;align-items:stretch">
+      <div class="col fill r" style="--i:2">
+        <div id="drivers"></div>
+        <div class="scen" id="scen" style="margin-top:22px"><h3><span id="scenT"></span><span class="sc" id="scenS"></span></h3><p id="scenP"></p></div>
+      </div>
+      <div class="col r" style="--i:3;width:600px;flex:none;gap:18px">
+        <div class="role" id="roleBox" aria-live="polite"><span class="ic" id="roleIc"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"></path></svg></span><div><span class="k" id="roleT" style="margin:0">Draw a role</span><p id="roleP" style="font-size:21px">Each member draws one card and argues from that position.</p></div></div>
+        <div class="row" style="gap:14px"><button class="btn" id="draw">Draw a role</button><button class="btn alt" id="clearRoles">New round</button></div>
+        <p id="drawn" style="font-size:19px;color:var(--muted);min-height:26px"></p>
+        <div class="card" style="padding:24px">
+          <span class="k" style="font-size:26px">Council timer</span>
+          <div class="row" style="align-items:center;gap:18px"><span class="timer" id="tm">20:00</span><button class="btn" id="tgo">Start</button><button class="btn alt" id="trs">Reset</button></div>
+        </div>
+        <div class="card fill" style="padding:24px"><span class="k" style="font-size:26px">Debrief</span><ul style="padding-left:24px;font-size:20px;line-height:1.38"><li>Which drivers can people in Uttarkanya control, and which are set in Kathmandu, London or the atmosphere?</li><li>Can renewed Tamu identity hold young people, or pull returnees back?</li><li>What does this simple scoring leave out?</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === 14 DISCUSSION === -->
+<section class="slide dark" data-theme="dark" data-sec="4" style="background:var(--ink)">
+  <img class="r-img" src="img/shepherd_mist.jpg" alt="Shepherd standing among a large flock in mist" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;max-height:none">
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,29,24,.86),rgba(22,29,24,.62))"></div>
+  <h2 class="title r" style="font-size:72px" data-edit>Retreat or revitalize?</h2>
+  <div class="body col" style="justify-content:center;gap:64px;top:220px">
+    <div class="row r" style="--i:1;align-items:center;gap:32px"><span class="num" style="background:var(--gold);color:var(--ink);width:76px;height:76px;font-size:30px">1</span><p style="font-size:40px;color:#fff;line-height:1.25" data-edit>Who should decide the future of the high pastures: herders, the municipality, ACAP, or the youth who left?</p></div>
+    <div class="row r" style="--i:2;align-items:center;gap:32px"><span class="num" style="background:var(--gold);color:var(--ink);width:76px;height:76px;font-size:30px">2</span><p style="font-size:40px;color:#fff;line-height:1.25" data-edit>Pignède, Messerschmidt and Macfarlane each saw a different “problem”. Which lens fits Lamjung today?</p></div>
+    <div class="row r" style="--i:3;align-items:center;gap:32px"><span class="num" style="background:var(--gold);color:var(--ink);width:76px;height:76px;font-size:30px">3</span><p style="font-size:40px;color:#fff;line-height:1.25" data-edit>If herding retreats, what is lost that a market price would never show?</p></div>
+  </div>
+</section>
+
+<!-- === 15 REFERENCES === -->
+<section class="slide" data-sec="5">
+  <h2 class="title r" data-edit>References</h2>
+  <div class="body col r" style="--i:1;justify-content:space-between;font-size:24px;line-height:1.36;padding-left:36px;text-indent:-36px">
+    <div data-edit>Agrawal, A. (2008). <i>The Role of Local Institutions in Adaptation to Climate Change</i>. Washington, DC: World Bank.</div>
+    <div data-edit>Aryal, S., Maraseni, T. N., &amp; Cockfield, G. (2014). Sustainability of transhumance grazing systems under socio-economic threats in Langtang, Nepal. <i>Journal of Mountain Science, 11</i>(4), 1023–1034.</div>
+    <div data-edit>Childs, G., Craig, S., Beall, C. M., &amp; Basnyat, B. (2014). Depopulating the Himalayan highlands: Education and outmigration from ethnically Tibetan communities of Nepal. <i>Mountain Research and Development, 34</i>(2), 85–94.</div>
+    <div data-edit>Macfarlane, A. (1976). <i>Resources and Population: A Study of the Gurungs of Nepal</i>. Cambridge: Cambridge University Press.</div>
+    <div data-edit>Macfarlane, A., &amp; Gurung, I. B. (1990). <i>Gurungs of Nepal: A Guide to the Gurungs</i>. Kathmandu: Ratna Pustak Bhandar.</div>
+    <div data-edit>Messerschmidt, D. A. (1976a). <i>The Gurungs of Nepal: Conflict and Change in a Village Society</i>. Warminster: Aris &amp; Phillips.</div>
+    <div data-edit>Messerschmidt, D. A. (1976b). Ecological change and adaptation among the Gurungs of the Nepal Himalaya. <i>Human Ecology, 4</i>(2), 167–185.</div>
+    <div data-edit>Pettigrew, J., &amp; Tamu, Y. (1999). The Kohla Project: Studying the past with the Tamu-mai. <i>Studies in Nepali History and Society, 4</i>, 327–364.</div>
+    <div data-edit>Pignède, B. (1966). <i>Les Gurungs: Une population himalayenne du Népal</i>. Paris: Mouton. English ed. (1993), <i>The Gurungs</i>, trans. S. Harrison &amp; A. Macfarlane. Kathmandu: Ratna Pustak Bhandar.</div>
+  </div>
+</section>
+
+<!-- === 16 ACKNOWLEDGEMENTS === -->
+<section class="slide dark" data-theme="dark" data-sec="5">
+  <h2 class="title r" data-edit>Acknowledgements</h2>
+  <div class="body row" style="gap:72px;align-items:stretch">
+    <div class="col fill" style="justify-content:space-between">
+      <div class="col" style="gap:26px">
+        <p class="r" style="--i:1" data-edit>Feed the Future Innovation Lab for Collaborative Research on Adapting Livestock Systems to Climate Change, Colorado State University (Grant No. COEUS#12092246)</p>
+        <p class="r" style="--i:2" data-edit>Dr. Netra Chhetri, Lead PI of APaCC; Dr. Pashupati Chaudhary, Bishnu Dhakal and other staff of LI-BIRD Nepal; Khamba Gurung, Lal B. Gurung, Prem J. Ghale, Kashi Jung Ghale and other villagers</p>
+        <p class="r" style="--i:3" data-edit>The National Science Foundation's Dynamics of Coupled Natural and Human Systems program</p>
+      </div>
+      <div class="r" style="--i:4"><div class="serif" style="font-size:56px;color:var(--gold)" data-edit>Milan Shrestha, PhD</div><p style="color:#fff" data-edit>Teaching Professor, School of Sustainability, Arizona State University<br>milanshrestha@asu.edu · milanshrestha.com</p></div>
+    </div>
+    <div class="r-img" style="width:760px;flex:none"><img class="ph" src="img/village_siklis.jpg" alt="Dense Gurung village on terraced hillside"></div>
+  </div>
+</section>
+
+<!-- === CHROME (persistent, scales with the stage) === -->
+<div class="chrome" id="chrome">
+  <div class="progress" id="progress"></div>
+  <nav class="toc" id="toc" aria-label="Table of contents"></nav>
+  <div class="nav"><span class="count" id="count"></span><button id="prev" aria-label="Previous slide"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"></path></svg></button><button id="next" aria-label="Next slide"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path></svg></button></div>
+</div>
+</main>
+</div>
+<div class="edit-hotzone" id="hotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">Edit text</button>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   =========================================== */
+(function(){
+  const stage=document.getElementById('deckStage');
+  const slides=[...stage.querySelectorAll('.slide')];
+  const chrome=document.getElementById('chrome');
+  const SECTIONS=[
+    ['Opening',0,`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path></svg>`],['Gurungs and their scholars',2,`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"></path></svg>`],['The agropastoral system',4,`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M634.92 462.7l-288-448C341.03 5.54 330.89 0 320 0s-21.03 5.54-26.92 14.7l-288 448a32.001 32.001 0 0 0-1.17 32.64A32.004 32.004 0 0 0 32 512h576c11.71 0 22.48-6.39 28.09-16.67a31.983 31.983 0 0 0-1.17-32.63zM320 91.18L405.39 224H320l-64 64-38.06-38.06L320 91.18z"></path></svg>`],
+    ['Pressures and challenges',8,`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg>`],['Class exercises',11,`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M519.442 288.651c-41.519 0-59.5 31.593-82.058 31.593C377.409 320.244 432 144 432 144s-196.288 80-196.288-3.297c0-35.827 36.288-46.25 36.288-85.985C272 19.216 243.885 0 210.539 0c-34.654 0-66.366 18.891-66.366 56.346 0 41.364 31.711 59.277 31.711 81.75C175.885 207.719 0 166.758 0 166.758v333.237s178.635 41.047 178.635-28.662c0-22.473-40-40.107-40-81.471 0-37.456 29.25-56.346 63.577-56.346 33.673 0 61.788 19.216 61.788 54.717 0 39.735-36.288 50.158-36.288 85.985 0 60.803 129.675 25.73 181.23 25.73 0 0-34.725-120.101 25.827-120.101 35.962 0 46.423 36.152 86.308 36.152C556.712 416 576 387.99 576 354.443c0-34.199-18.962-65.792-56.558-65.792z"></path></svg>`],['Sources',14,`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"></path></svg>`]
+  ];
+  let cur=0;
+
+  // footer on every slide except the title
+  slides.forEach((s,i)=>{ if(i>0){const f=document.createElement('div');f.className='foot';f.textContent='Agropastoralism in Lamjung · Milan Shrestha';s.appendChild(f);} });
+
+  // table of contents
+  const toc=document.getElementById('toc');
+  SECTIONS.forEach((sec,k)=>{const a=document.createElement('a');a.href='#'+(sec[1]+1);a.setAttribute('aria-label','Go to '+sec[0]);a.innerHTML=sec[2]+'<span class="tip">'+sec[0]+'</span>';a.addEventListener('click',e=>{e.preventDefault();go(sec[1]);});toc.appendChild(a);});
+  const tocLinks=[...toc.children];
+
+  // uniform stage scaling (fixed 1920x1080)
+  function scale(){const f=Math.min(innerWidth/1920,innerHeight/1080);const x=(innerWidth-1920*f)/2,y=(innerHeight-1080*f)/2;stage.style.transform=`translate(${x}px,${y}px) scale(${f})`;}
+  addEventListener('resize',scale);scale();
+
+  function go(i){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,k)=>{s.classList.toggle('active',k===cur);s.classList.toggle('visible',k===cur);});
+    const s=slides[cur];const theme=s.dataset.theme||'light';
+    chrome.className='chrome theme-'+theme;
+    const sec=+s.dataset.sec;tocLinks.forEach((a,k)=>{a.classList.toggle('on',k===sec);a.toggleAttribute('aria-current',k===sec);});
+    document.getElementById('count').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1;
+    document.getElementById('progress').style.width=((cur)/(slides.length-1)*100)+'%';
+    try{history.replaceState(null,'','#'+(cur+1));}catch(e){}
+  }
+  document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+  document.getElementById('next').addEventListener('click',()=>go(cur+1));
+  document.addEventListener('keydown',e=>{
+    if(document.body.classList.contains('editing')||/INPUT|TEXTAREA/.test(e.target.tagName))return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1);}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}
+    else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);
+  });
+  let tx=null,ty=null;
+  stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  stage.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))go(cur+(dx<0?1:-1));tx=null;});
+  let wheelLock=0;
+  addEventListener('wheel',e=>{if(document.body.classList.contains('editing'))return;const now=Date.now();if(now<wheelLock||Math.abs(e.deltaY)<30)return;wheelLock=now+700;go(cur+(e.deltaY>0?1:-1));},{passive:true});
+  let start=0;try{const h=parseInt(location.hash.slice(1));if(h>0&&h<=slides.length)start=h-1;}catch(e){}
+  addEventListener('hashchange',()=>{const h=parseInt(location.hash.slice(1));if(h>0&&h<=slides.length&&h-1!==cur)go(h-1);});
+  requestAnimationFrame(()=>go(start));
+
+  /* ===========================================
+     EXERCISE 1 — SORT THE STRATEGY
+     =========================================== */
+  const CATS=[['Mobility',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 320h-96c-17.6 0-32-14.4-32-32s14.4-32 32-32h96s96-107 96-160-43-96-96-96-96 43-96 96c0 25.5 22.2 63.4 45.3 96H320c-52.9 0-96 43.1-96 96s43.1 96 96 96h96c17.6 0 32 14.4 32 32s-14.4 32-32 32H185.5c-16 24.8-33.8 47.7-47.3 64H416c52.9 0 96-43.1 96-96s-43.1-96-96-96zm0-256c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM96 256c-53 0-96 43-96 96s96 160 96 160 96-107 96-160-43-96-96-96zm0 128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg>`],['Storage',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M504 352H136.4c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8H504c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm0 96H136.1c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm0-192H136.6c-4.4 0-8 3.6-8 8l-.1 48c0 4.4 3.6 8 8 8H504c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm106.5-139L338.4 3.7a48.15 48.15 0 0 0-36.9 0L29.5 117C11.7 124.5 0 141.9 0 161.3V504c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8V256c0-17.6 14.6-32 32.6-32h382.8c18 0 32.6 14.4 32.6 32v248c0 4.4 3.6 8 8 8h80c4.4 0 8-3.6 8-8V161.3c0-19.4-11.7-36.8-29.5-44.3z"></path></svg>`],['Diversification',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M504.971 359.029c9.373 9.373 9.373 24.569 0 33.941l-80 79.984c-15.01 15.01-40.971 4.49-40.971-16.971V416h-58.785a12.004 12.004 0 0 1-8.773-3.812l-70.556-75.596 53.333-57.143L352 336h32v-39.981c0-21.438 25.943-31.998 40.971-16.971l80 79.981zM12 176h84l52.781 56.551 53.333-57.143-70.556-75.596A11.999 11.999 0 0 0 122.785 96H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12zm372 0v39.984c0 21.46 25.961 31.98 40.971 16.971l80-79.984c9.373-9.373 9.373-24.569 0-33.941l-80-79.981C409.943 24.021 384 34.582 384 56.019V96h-58.785a12.004 12.004 0 0 0-8.773 3.812L96 336H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h110.785c3.326 0 6.503-1.381 8.773-3.812L352 176h32z"></path></svg>`],['Communal pooling',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M488 192H336v56c0 39.7-32.3 72-72 72s-72-32.3-72-72V126.4l-64.9 39C107.8 176.9 96 197.8 96 220.2v47.3l-80 46.2C.7 322.5-4.6 342.1 4.3 357.4l80 138.6c8.8 15.3 28.4 20.5 43.7 11.7L231.4 448H368c35.3 0 64-28.7 64-64h16c17.7 0 32-14.3 32-32v-64h8c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24zm147.7-37.4L555.7 16C546.9.7 527.3-4.5 512 4.3L408.6 64H306.4c-12 0-23.7 3.4-33.9 9.7L239 94.6c-9.4 5.8-15 16.1-15 27.1V248c0 22.1 17.9 40 40 40s40-17.9 40-40v-88h184c30.9 0 56 25.1 56 56v28.5l80-46.2c15.3-8.9 20.5-28.4 11.7-43.7z"></path></svg>`],['Exchange',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z"></path></svg>`]];
+  const CARDS=[
+    ['A','Herders move to a higher goth earlier after a dry spring',0,'Moving animals through space to reach grass and water is mobility.'],
+    ['B','Families dry and stack maize stalks and leaf fodder for winter',1,'Holding fodder over time is storage.'],
+    ['C','A household opens a trekkers’ homestay but keeps a small flock',2,'Adding a second income stream is diversification.'],
+    ['D','Several families combine their sheep under one hired shepherd',3,'Sharing labour and animals across households is communal pooling.'],
+    ['E','Herders sell wool and animals, then buy rice and salt in Besisahar',4,'Trading through markets is exchange.'],
+    ['F','Grain is kept in the household granary as a buffer for a bad year',1,'A buffer held across time is storage.'],
+    ['G','Shepherds share one camp and take turns guarding against leopards',3,'Pooling labour and risk is communal pooling.'],
+    ['H','A son’s remittances from London pay for a hired herder',2,'Usually read as income diversification. Debate it: does it sustain herding or replace family labour?'],
+  ];
+  const pool=document.getElementById('pool'),bins=document.getElementById('bins'),fb=document.getElementById('fb1');
+  let sel=null;const place={};
+  function render1(){
+    pool.innerHTML='';
+    CARDS.forEach(c=>{if(place[c[0]]!==undefined)return;const b=document.createElement('button');b.className='pcard'+(sel===c[0]?' sel':'');b.innerHTML='<b>'+c[0]+'</b>'+c[1];b.setAttribute('aria-pressed',sel===c[0]);b.onclick=()=>{sel=(sel===c[0]?null:c[0]);render1();};pool.appendChild(b);});
+    if(!pool.children.length){const d=document.createElement('p');d.style.cssText='grid-column:1/-1;color:var(--muted);font-size:22px;align-self:center';d.textContent='All cards placed. Press Check answers, or click a placed card to send it back.';pool.appendChild(d);}
+    bins.innerHTML='';
+    CATS.forEach((cat,i)=>{const b=document.createElement('div');b.className='bin'+(sel?' armed':'');b.tabIndex=0;b.setAttribute('role','button');b.setAttribute('aria-label','Place selected card in '+cat[0]);
+      b.innerHTML='<h3><span class="ic">'+cat[1]+'</span>'+cat[0]+'</h3>';
+      CARDS.forEach(c=>{if(place[c[0]]===i){const ch=document.createElement('div');ch.className='chip';ch.dataset.k=c[0];ch.innerHTML='<b>'+c[0]+'</b> '+c[1];ch.title='Click to send back';ch.onclick=ev=>{ev.stopPropagation();delete place[c[0]];fb.textContent='';render1();};b.appendChild(ch);}});
+      const put=()=>{if(!sel)return;place[sel]=i;sel=null;fb.textContent='';render1();};
+      b.onclick=put;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();put();}};
+      bins.appendChild(b);});
+  }
+  document.getElementById('check').onclick=()=>{
+    const n=Object.keys(place).length;
+    if(n<CARDS.length){fb.textContent='Place all '+CARDS.length+' cards first ('+n+' placed).';return;}
+    let ok=0;const notes=[];
+    CARDS.forEach(c=>{const chip=bins.querySelector('.chip[data-k="'+c[0]+'"]');const right=place[c[0]]===c[2];if(right)ok++;else notes.push(c[0]+' → '+CATS[c[2]][0]);if(chip){chip.classList.add(right?'ok':'bad');chip.title=c[3];}});
+    fb.innerHTML='<b>'+ok+' / '+CARDS.length+'</b> match the key. '+(notes.length?'Suggested: '+notes.join(' · ')+'. Hover a card for the reasoning.':'Now debate card H.');
+  };
+  document.getElementById('reset1').onclick=()=>{for(const k in place)delete place[k];sel=null;fb.textContent='';render1();};
+  render1();
+
+  /* ===========================================
+     EXERCISE 2 — UTTARKANYA 2030 FUTURES COUNCIL
+     =========================================== */
+  const LV=['Low','Medium','High'];
+  const DRIVERS=[
+    ['Youth out-migration','to Besisahar, Pokhara, Kathmandu, London and cities abroad',-1,2],
+    ['Climate stress','drought, extreme rain, shrinking water sources',-1,1],
+    ['Market and tourism demand','local meat, wool, cheese, homestays',1,1],
+    ['Institutional support','municipality, ACAP, cooperatives, customary rights',1,0],
+    ['Renewed cultural identity','Tamu Lhosar, pye, pride in herding heritage',1,1],
+  ];
+  const wrap=document.getElementById('drivers');
+  DRIVERS.forEach((d,i)=>{const row=document.createElement('div');row.className='drv';row.innerHTML='<label for="d'+i+'"><b>'+d[0]+'</b><span>'+d[1]+'</span></label><input id="d'+i+'" type="range" min="0" max="2" step="1" value="'+d[3]+'"><span class="v" id="v'+i+'"></span>';wrap.appendChild(row);});
+  const SC={
+    retreat:['Retreat','#B23A3A','Flocks are sold off and high pastures are abandoned or overgrown. Herding knowledge leaves with the elders; Uttarkanya depends on remittances and imported food.'],
+    hybrid:['Hybrid','#B97F10','Fewer, larger flocks run by hired herders. Herding survives as a side business; customary rules weaken but do not vanish.'],
+    revital:['Revitalize','#2F4A3A','Herder cooperatives, valued local meat, wool and cheese, and a confident Tamu identity. Young people help write the grazing rules; mobility is recognised as climate adaptation.'],
+  };
+  function upd(){let score=0;DRIVERS.forEach((d,i)=>{const v=+document.getElementById('d'+i).value;document.getElementById('v'+i).textContent=LV[v];score+=d[2]*v;});
+    const k=score<=-1?'retreat':score<=2?'hybrid':'revital';const s=SC[k];
+    document.getElementById('scen').style.backgroundColor=s[1];document.getElementById('scenT').textContent=s[0];document.getElementById('scenS').textContent='score '+(score>0?'+':'')+score;document.getElementById('scenP').textContent=s[2];}
+  DRIVERS.forEach((_,i)=>document.getElementById('d'+i).addEventListener('input',upd));upd();
+  const ROLES=[
+    ['Elder shepherd','40 years on the Madi pastures. Knows every goth and every rule.',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136 32-56h-96l32 56-32 136-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z"></path></svg>`],
+    ['Returnee youth','Back from Kathmandu and London with savings. Wants a future that pays.',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z"></path></svg>`],
+    ['ACAP officer','Balances grazing with conservation-area rules and wildlife.',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M546.2 9.7c-5.6-12.5-21.6-13-28.3-1.2C486.9 62.4 431.4 96 368 96h-80C182 96 96 182 96 288c0 7 .8 13.7 1.5 20.5C161.3 262.8 253.4 224 384 224c8.8 0 16 7.2 16 16s-7.2 16-16 16C132.6 256 26 410.1 2.4 468c-6.6 16.3 1.2 34.9 17.5 41.6 16.4 6.8 35-1.1 41.8-17.3 1.5-3.6 20.9-47.9 71.9-90.6 32.4 43.9 94 85.8 174.9 77.2C465.5 467.5 576 326.7 576 154.3c0-50.2-10.8-102.2-29.8-144.6z"></path></svg>`],
+    ['Ward chair','Controls the rural municipality budget and roads.',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M501.62 92.11L267.24 2.04a31.958 31.958 0 0 0-22.47 0L10.38 92.11A16.001 16.001 0 0 0 0 107.09V144c0 8.84 7.16 16 16 16h480c8.84 0 16-7.16 16-16v-36.91c0-6.67-4.14-12.64-10.38-14.98zM64 192v160H48c-8.84 0-16 7.16-16 16v48h448v-48c0-8.84-7.16-16-16-16h-16V192h-64v160h-96V192h-64v160h-96V192H64zm432 256H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h480c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"></path></svg>`],
+    ["Mothers' group lead",'Runs the homestay network and village savings group.',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M128 0c35.346 0 64 28.654 64 64s-28.654 64-64 64c-35.346 0-64-28.654-64-64S92.654 0 128 0m119.283 354.179l-48-192A24 24 0 0 0 176 144h-11.36c-22.711 10.443-49.59 10.894-73.28 0H80a24 24 0 0 0-23.283 18.179l-48 192C4.935 369.305 16.383 384 32 384h56v104c0 13.255 10.745 24 24 24h32c13.255 0 24-10.745 24-24V384h56c15.591 0 27.071-14.671 23.283-29.821z"></path></svg>`],
+    ['Climate scientist','Brings drought and extreme-rainfall projections.',`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M510.5 225.5c-6.9-37.2-39.3-65.5-78.5-65.5-12.3 0-23.9 3-34.3 8-17.4-24.1-45.6-40-77.7-40-53 0-96 43-96 96 0 .5.2 1.1.2 1.6C187.6 233 160 265.2 160 304c0 44.2 35.8 80 80 80h256c44.2 0 80-35.8 80-80 0-39.2-28.2-71.7-65.5-78.5zm-386.4 34.4c-37.4-37.4-37.4-98.3 0-135.8 34.6-34.6 89.1-36.8 126.7-7.4 20-12.9 43.6-20.7 69.2-20.7.7 0 1.3.2 2 .2l8.9-26.7c3.4-10.2-6.3-19.8-16.5-16.4l-75.3 25.1-35.5-71c-4.8-9.6-18.5-9.6-23.3 0l-35.5 71-75.3-25.1c-10.2-3.4-19.8 6.3-16.4 16.5l25.1 75.3-71 35.5c-9.6 4.8-9.6 18.5 0 23.3l71 35.5-25.1 75.3c-3.4 10.2 6.3 19.8 16.5 16.5l59.2-19.7c-.2-2.4-.7-4.7-.7-7.2 0-12.5 2.3-24.5 6.2-35.9-3.6-2.7-7.1-5.2-10.2-8.3zm69.8-58c4.3-24.5 15.8-46.4 31.9-64-9.8-6.2-21.4-9.9-33.8-9.9-35.3 0-64 28.7-64 64 0 18.7 8.2 35.4 21.1 47.1 11.3-15.9 26.6-28.9 44.8-37.2zm330.6 216.2c-7.6-4.3-17.4-1.8-21.8 6l-36.6 64c-4.4 7.7-1.7 17.4 6 21.8 2.5 1.4 5.2 2.1 7.9 2.1 5.5 0 10.9-2.9 13.9-8.1l36.6-64c4.3-7.7 1.7-17.4-6-21.8zm-96 0c-7.6-4.3-17.4-1.8-21.8 6l-36.6 64c-4.4 7.7-1.7 17.4 6 21.8 2.5 1.4 5.2 2.1 7.9 2.1 5.5 0 10.9-2.9 13.9-8.1l36.6-64c4.3-7.7 1.7-17.4-6-21.8zm-96 0c-7.6-4.3-17.4-1.8-21.8 6l-36.6 64c-4.4 7.7-1.7 17.4 6 21.8 2.5 1.4 5.2 2.1 7.9 2.1 5.5 0 10.9-2.9 13.9-8.1l36.6-64c4.3-7.7 1.7-17.4-6-21.8zm-96 0c-7.6-4.3-17.4-1.8-21.8 6l-36.6 64c-4.4 7.7-1.7 17.4 6 21.8 2.5 1.4 5.2 2.1 7.9 2.1 5.5 0 10.9-2.9 13.9-8.1l36.6-64c4.3-7.7 1.7-17.4-6-21.8z"></path></svg>`],
+  ];
+  let deck=[];const drawn=[];const box=document.getElementById('roleBox');
+  function shuffle(){deck=ROLES.map((_,i)=>i);for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}drawn.length=0;}
+  shuffle();
+  function setRole(ic,t,p){box.classList.remove('flip');void box.offsetWidth;box.classList.add('flip');document.getElementById('roleIc').innerHTML=ic;document.getElementById('roleT').textContent=t;document.getElementById('roleP').textContent=p;}
+  document.getElementById('draw').onclick=()=>{if(!deck.length){setRole(`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M500.33 0h-47.41a12 12 0 0 0-12 12.57l4 82.76A247.42 247.42 0 0 0 256 8C119.34 8 7.9 119.53 8 256.19 8.1 393.07 119.1 504 256 504a247.1 247.1 0 0 0 166.18-63.91 12 12 0 0 0 .48-17.43l-34-34a12 12 0 0 0-16.38-.55A176 176 0 1 1 402.1 157.8l-101.53-4.87a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12h200.33a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12z"></path></svg>`,'All six roles drawn','Press New round to reshuffle.');return;}const r=ROLES[deck.pop()];drawn.push(r[0]);setRole(r[2],r[0],r[1]);document.getElementById('drawn').textContent='Drawn: '+drawn.join(', ');};
+  document.getElementById('clearRoles').onclick=()=>{shuffle();setRole(`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"></path></svg>`,'Draw a role','Each member draws one card and argues from that position.');document.getElementById('drawn').textContent='';};
+  let t=1200,timer=null;const tm=document.getElementById('tm'),tgo=document.getElementById('tgo');
+  const fmt=()=>tm.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+  tgo.onclick=()=>{if(timer){clearInterval(timer);timer=null;tgo.textContent='Start';return;}tgo.textContent='Pause';timer=setInterval(()=>{if(t>0){t--;fmt();}else{clearInterval(timer);timer=null;tgo.textContent='Start';tm.style.color='#B23A3A';}},1000);};
+  document.getElementById('trs').onclick=()=>{clearInterval(timer);timer=null;t=1200;fmt();tm.style.color='';tgo.textContent='Start';};
+
+  /* ===========================================
+     INLINE EDITING (E key or top-left hotzone); saved in this browser only
+     =========================================== */
+  const KEY='lamjung-deck-edits-v2';const editable=[...document.querySelectorAll('[data-edit]')];
+  try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');editable.forEach((el,i)=>{if(saved[i]!==undefined)el.innerHTML=saved[i];});}catch(e){}
+  const toggle=document.getElementById('editToggle'),hot=document.getElementById('hotzone');let editing=false,hideT=null;
+  function setEdit(on){editing=on;document.body.classList.toggle('editing',on);toggle.classList.toggle('active',on);toggle.textContent=on?'Done editing':'Edit text';editable.forEach(el=>el.contentEditable=on?'true':'false');if(!on){try{const o={};editable.forEach((el,i)=>o[i]=el.innerHTML);localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}toggle.classList.remove('show');}}
+  toggle.onclick=()=>setEdit(!editing);hot.onclick=()=>setEdit(!editing);
+  hot.onmouseenter=()=>{clearTimeout(hideT);toggle.classList.add('show');};
+  hot.onmouseleave=()=>{hideT=setTimeout(()=>{if(!editing)toggle.classList.remove('show');},400);};
+  toggle.onmouseenter=()=>clearTimeout(hideT);
+  toggle.onmouseleave=()=>{hideT=setTimeout(()=>{if(!editing)toggle.classList.remove('show');},400);};
+  document.addEventListener('keydown',e=>{if((e.key==='e'||e.key==='E')&&!e.target.isContentEditable&&!/INPUT|TEXTAREA/.test(e.target.tagName))setEdit(!editing);if(e.key==='Escape'&&editing)setEdit(false);});
+})();
+</script>
+</body>
+</html>
